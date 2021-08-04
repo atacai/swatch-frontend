@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [colors, setColors] = useState([]);
+
+  const fetchHandler = async () => {
+    const response = await fetch("http://localhost:8000/colors");
+    const data = await response.json();
+    const colorData = data.map((item, index) => {
+      const colorCode = Object.entries(item)
+        .filter(([key, value]) => key !== "type")
+        .map((color) => color[1])
+        .join(",");
+      return {
+        type: item.type,
+        code: `${item.type}(${colorCode})`,
+      };
+    });
+    setColors(colorData);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className="Button" onClick={fetchHandler}>
+        Regenerate
+      </button>
     </div>
   );
 }
