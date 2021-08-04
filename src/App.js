@@ -24,11 +24,24 @@ function App() {
     fetchHandler();
   }, []);
 
+  const swatchColor = colors.map((item, index) => (
+    <li key={index}>
+      <div
+        className="SwatcherBlock"
+        style={{ backgroundColor: item.code }}
+      ></div>
+      {item.code}
+    </li>
+  ));
+
   return (
     <div className="App">
-      <button className="Button" onClick={fetchHandler}>
-        Regenerate
-      </button>
+      <ul className="SwatcherColors">{swatchColor}</ul>
+      <div className="ButtonContainer">
+        <button className="Button" onClick={fetchHandler}>
+          Regenerate
+        </button>
+      </div>
     </div>
   );
 }
