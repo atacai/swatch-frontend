@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -19,6 +19,10 @@ function App() {
     });
     setColors(colorData);
   };
+
+  useEffect(() => {
+    fetchHandler();
+  }, []);
 
   return (
     <div className="App">
